@@ -1,75 +1,70 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable react/prop-types */
+import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-const Parsing = (e, q, p) => {
-  const [info, setInfo] = useState();
-  useEffect(() => {
-    const apiCall = async () => {
-      await axios
-        .post('http://localhost:3000/coupon', {
-          email: e,
-          qnt: q,
-          price: p,
-        })
-        .then((response) => {
-          setInfo(response.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-    apiCall();
-  }, [e, q, p]);
-
-  if (!info) return null;
-
-  return info;
+const Posting = (e, q, p) => {
+  const apiCall = async () => {
+    await axios
+      .post('http://localhost:3000/coupon', {
+        email: e,
+        qnt: q,
+        price: p,
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  apiCall();
 };
 
 const CreateCoupon = () => {
-  // const [inputs, setInputs] = useState({
-  //   email: '',
-  //   qnt: '',
-  //   price: '',
-  // });
+  const [inputs, setInputs] = useState({
+    email: '',
+    qnt: '',
+    price: '',
+  });
 
-  // const { email, qnt, price } = inputs;
+  const { email, qnt, price } = inputs;
 
-  // const onChange = (e) => {
-  //   console.log(e.target);
-  //   const { name, value } = e.target;
-  //   setInputs({
-  //     ...inputs,
-  //     [name]: value,
-  //   });
-  // };
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+  };
 
-  // const onReset = () => {
-  //   setInputs({
-  //     email: '',
-  //     qnt: '',
-  //     price: '',
-  //   });
-  // };
+  const onSubmit = (e) => {
+    e.preventDefault();
+    Posting(email, qnt, price);
 
-  const list = Parsing('admin@admin.com', 3, 7000);
-  console.log(list);
-  // if (!list) return console.log('waiting');
+    // eslint-disable-next-line no-alert
+    alert('쿠폰이 발급되었습니다! 쿠폰함에서 발급된 쿠폰을 확인하세요!');
+    setInputs({
+      email: '',
+      qnt: '',
+      price: '',
+    });
+  };
+
   return (
     <div>
       <h2>쿠폰 만들기</h2>
-      {/* <input name="email" placeholder="email" onChange={onChange} value={email} />
-      <input name="qnt" placeholder="수량" onChange={onChange} value={qnt} />
-      <input name="price" placeholder="가격" onChange={onChange} value={price} />
-      <button type="button" onClick={onReset}>초기화</button> */}
-      <div>
-        <b>
-          값:
-          {/* {list && list[0]} */}
-        </b>
-      </div>
+      <form onSubmit={onSubmit}>
+        <input name="email" placeholder="email" onChange={onChange} value={email} required />
+        <input name="qnt" placeholder="수량" type="number" min="1" onChange={onChange} value={qnt} required />
+        <input name="price" placeholder="가격" type="number" min="1" onChange={onChange} value={price} required />
+        <button type="submit">생성하기</button>
+      </form>
+      <Link to="/list">
+        <button type="button">쿠폰함 바로가기</button>
+      </Link>
     </div>
   );
 };
-// 나중에 버튼 누르면 쿠폰이 발급되었습니다 쿠폰함가서 확인하세요
+
 export default CreateCoupon;

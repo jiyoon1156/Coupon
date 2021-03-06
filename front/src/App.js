@@ -5,6 +5,10 @@ import CreateCoupon from './pages/createCoupon';
 import CouponList from './pages/couponList';
 
 const App = () => (
+  // <>
+  //   <CreateCoupon />
+  //   <CouponList />
+  // </>
   <BrowserRouter>
     <Route exact path="/" component={CreateCoupon} />
     <Switch>
