@@ -2,6 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import Button from '../components/Button';
+import Ground from '../components/Ground';
+// import Form from '../components/Form';
+// import Input from '../components/Input';
 
 const CouponList = () => {
   const [info, setInfo] = useState();
@@ -21,23 +26,44 @@ const CouponList = () => {
   };
 
   return (
-    <div>
-      <h2>쿠폰 리스트</h2>
-      <Link to="/">
-        <button type="button">쿠폰 만들러 가기</button>
-      </Link>
-      <div>
-        {info && info.map((i) => (
-          <div>
-            {i.email}
-            {' '}
-            {i.price}
-            <button type="button" id={i.uuid} onClick={useCoupon}>사용하기</button>
-          </div>
-        ))}
-      </div>
-    </div>
+    <>
+      <Ground>
+        <NavBar>
+          <Button>
+            <Link to="/">
+              <Button>쿠폰 만들기</Button>
+            </Link>
+          </Button>
+          <Button type="main">
+            쿠폰함
+          </Button>
+        </NavBar>
+        <Box>
+          {info && info.map((i) => (
+            <div>
+              {i.email}
+              {' '}
+              {i.price}
+              <Button type="main" id={i.uuid} onClick={useCoupon}>사용하기</Button>
+            </div>
+          ))}
+        </Box>
+      </Ground>
+    </>
   );
 };
+
+const NavBar = styled.div`
+display: flex;
+width: 100%;
+`;
+
+const Box = styled.div`
+display: flex;
+flex-direction: column;
+box-sizing: border-box;
+width: 100%;
+padding: 10px;
+`;
 
 export default CouponList;

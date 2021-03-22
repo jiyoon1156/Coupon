@@ -2,6 +2,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import Button from '../components/Button';
+import Ground from '../components/Ground';
+import Form from '../components/Form';
+import Input from '../components/Input';
 
 const Posting = (e, q, p) => {
   const apiCall = async () => {
@@ -52,19 +57,35 @@ const CreateCoupon = () => {
   };
 
   return (
-    <div>
-      <h2>쿠폰 만들기</h2>
-      <form onSubmit={onSubmit}>
-        <input name="email" placeholder="email" onChange={onChange} value={email} required />
-        <input name="qnt" placeholder="수량" type="number" min="1" onChange={onChange} value={qnt} required />
-        <input name="price" placeholder="가격" type="number" min="1" onChange={onChange} value={price} required />
-        <button type="submit">생성하기</button>
-      </form>
-      <Link to="/list">
-        <button type="button">쿠폰함 바로가기</button>
-      </Link>
-    </div>
+    <>
+      <Ground>
+        <NavBar>
+          <Button type="main">
+            쿠폰 만들기
+          </Button>
+          <Button>
+            <Link to="/list">
+              쿠폰함
+            </Link>
+          </Button>
+        </NavBar>
+        <Form onSubmit={onSubmit}>
+          E-mail
+          <Input name="email" onChange={onChange} value={email} />
+          수량
+          <Input name="qnt" type="number" min="1" onChange={onChange} value={qnt} required />
+          가격
+          <Input name="price" type="number" min="1" onChange={onChange} value={price} required />
+          <Button type="main">발급받기</Button>
+        </Form>
+      </Ground>
+    </>
   );
 };
+
+const NavBar = styled.div`
+display: flex;
+width: 100%;
+`;
 
 export default CreateCoupon;
