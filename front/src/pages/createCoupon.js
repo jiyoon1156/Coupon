@@ -58,7 +58,7 @@ const CreateCoupon = () => {
 
   return (
     <>
-      <Ground>
+      <Ground type="main">
         <NavBar>
           <Button type="main">
             쿠폰 만들기

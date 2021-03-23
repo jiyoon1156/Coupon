@@ -27,7 +27,7 @@ const CouponList = () => {
 
   return (
     <>
-      <Ground>
+      <Ground type="main">
         <NavBar>
           <Button>
             <Link to="/">
@@ -40,12 +40,19 @@ const CouponList = () => {
         </NavBar>
         <Box>
           {info && info.map((i) => (
-            <div>
+            <Ground>
+              E-mail:
+              {' '}
               {i.email}
+              <br />
+              가격:
               {' '}
               {i.price}
+              <br />
+              쿠폰번호:
+              {' '}
               <Button type="main" id={i.uuid} onClick={useCoupon}>사용하기</Button>
-            </div>
+            </Ground>
           ))}
         </Box>
       </Ground>
@@ -59,10 +66,10 @@ width: 100%;
 `;
 
 const Box = styled.div`
-display: flex;
-flex-direction: column;
-box-sizing: border-box;
-width: 100%;
+// display: flex;
+// flex-direction: column;
+// box-sizing: border-box;
+// width: 100%;
 padding: 10px;
 `;
 

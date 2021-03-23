@@ -2,8 +2,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Ground = ({ children }) => (
-  <StyledG>{children}</StyledG>
+const Ground = ({ children, type }) => (
+  <StyledG type={type}>{children}</StyledG>
 );
 
 const StyledG = styled.div`
@@ -13,7 +13,7 @@ justify-content: center;
 align-items: center;
 width: 100%;
 border-radius: 20px;
-background-color: #fff;
+background: ${({ type }) => (type === 'main' ? '#fff' : '#d9d9d9')};
 margin-top: 20px;
 padding: 10px;
 `;
