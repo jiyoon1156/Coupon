@@ -14,7 +14,7 @@ const CouponList = () => {
   useEffect(() => {
     const apiCall = async () => {
       const { data } = await axios.get('http://localhost:3000/list');
-      setInfo(data);
+      setInfo(data.result);
     };
     apiCall();
   }, []);
@@ -51,7 +51,7 @@ const CouponList = () => {
               <br />
               쿠폰번호:
               {' '}
-              <Button type="main" id={i.uuid} onClick={useCoupon}>사용하기</Button>
+              <Button type="main" id={i.id} onClick={useCoupon}>사용하기</Button>
             </Ground>
           ))}
         </Box>
