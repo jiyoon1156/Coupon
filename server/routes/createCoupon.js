@@ -4,14 +4,15 @@ const router = express.Router();
 const pool = require('../models/DbConnection');
 const generator = require('./couponGenerator.js');
 
-// eslint-disable-next-line consistent-return
 router.post('', async (req, res) => {
   try {
     const { email } = req.body;
     const p = req.body.price;
     const q = req.body.qnt;
 
-    if (!email || !Number(p) || !Number(q)) {
+    if (!email || !Number(p) || !Number(q)
+    || Number(p) < 0 || Number(p) > 2147483647
+    || Number(q) < 0 || Number(q) > 2147483647) {
       return res.status(406).json({ message: 'wrong type' });
     }
 

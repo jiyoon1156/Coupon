@@ -3,9 +3,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Input = ({
-  name, onChange, value,
+  name, type, min, onChange, value,
 }) => (
-  <StyledInput name={name} onChange={onChange} value={value} required />
+  <StyledInput name={name} type={type} min={min} onChange={onChange} value={value} required />
 );
 
 const StyledInput = styled.input`

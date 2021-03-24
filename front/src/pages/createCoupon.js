@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import axios from 'axios';
@@ -18,9 +19,11 @@ const Posting = (e, q, p) => {
       })
       .then((response) => {
         console.log(response.data);
+        alert('쿠폰이 발급되었습니다! 쿠폰함에서 발급된 쿠폰을 확인하세요!');
       })
       .catch((error) => {
         console.log(error);
+        alert('쿠폰 발행에 실패했습니다.');
       });
   };
   apiCall();
@@ -46,9 +49,6 @@ const CreateCoupon = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     Posting(email, qnt, price);
-
-    // eslint-disable-next-line no-alert
-    alert('쿠폰이 발급되었습니다! 쿠폰함에서 발급된 쿠폰을 확인하세요!');
     setInputs({
       email: '',
       qnt: '',
