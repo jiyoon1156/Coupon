@@ -1,10 +1,20 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-const Button = ({ children, type }) => (
-  <StyledBtn type={type}>{children}</StyledBtn>
+const Button = ({
+  children, type, id, onClick, name,
+}) => (
+  <StyledBtn type={type} id={id} onClick={onClick} name={name}>{children}</StyledBtn>
 );
+
+Button.propTypes = {
+  children: PropTypes.node.isRequired,
+  type: PropTypes.node.isRequired,
+  id: PropTypes.node.isRequired,
+  onClick: PropTypes.node.isRequired,
+  name: PropTypes.node.isRequired,
+};
 
 const StyledBtn = styled.button`
 width: 100%;

@@ -5,8 +5,6 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../components/Button';
 import Ground from '../components/Ground';
-// import Form from '../components/Form';
-// import Input from '../components/Input';
 
 const CouponList = () => {
   const [info, setInfo] = useState();
@@ -15,14 +13,23 @@ const CouponList = () => {
     const apiCall = async () => {
       const { data } = await axios.get('http://localhost:3000/list');
       setInfo(data.result);
+      console.log(data.result);
     };
     apiCall();
   }, []);
 
   const useCoupon = async (e) => {
-    const { data } = await axios.delete(`http://localhost:3000/use/${e.target.id}`);
-    console.log(data);
-    setInfo(data);
+    await axios.put('http://localhost:3000/use', {
+      id: e.target.id,
+      qnt: e.target.name,
+    })
+      .then((response) => {
+        console.log(response.data);
+        setInfo(response.data.result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -56,7 +63,7 @@ const CouponList = () => {
               쿠폰번호:
               {' '}
               {i.code}
-              <Button type="main" id={i.id} onClick={useCoupon}>사용하기</Button>
+              <Button type="main" id={i.id} onClick={useCoupon} name={i.quantity}>사용하기</Button>
             </Ground>
           ))}
         </Box>
