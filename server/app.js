@@ -15,19 +15,8 @@ app.use(cors());
 // get, post, put
 app.use('/list', getRouter);
 app.use('/coupon', postRouter);
-app.use('/use/:id', putRouter);
+app.use('/use', putRouter);
 
 app.listen(3000, () => {
 	console.log('listening~~');
-});
-
-// delete or put
-app.delete('/use/:id', (req, res) => {
-	console.log(req.params.id);
-	const usedCoupon = list.find(c => c.uuid === req.params.id);
-	if (!usedCoupon) return res.status(404).send('There is no such coupon');
-
-	const idx = list.indexOf(usedCoupon);
-	list.splice(idx, 1);
-	return res.status(200).json(list);
 });
