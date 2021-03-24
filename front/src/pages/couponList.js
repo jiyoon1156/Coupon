@@ -49,8 +49,13 @@ const CouponList = () => {
               {' '}
               {i.price}
               <br />
+              수량:
+              {' '}
+              {i.quantity}
+              <br />
               쿠폰번호:
               {' '}
+              {i.code}
               <Button type="main" id={i.id} onClick={useCoupon}>사용하기</Button>
             </Ground>
           ))}
