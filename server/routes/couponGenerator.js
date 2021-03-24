@@ -1,4 +1,3 @@
-let couponCode = "";
 let decimal = [];
 let baseList = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 let baseSize = baseList.length;
@@ -48,9 +47,10 @@ const HashCode = () => {
 		{
 			ttl += decimal[i];
 		}
-		// console.log(ttl);
 		hashRaw = ttl;
 		res = getBase62(ttl);
+
+		decimal.length = 0; //배열 초기화
 		return res;
 	}
 };
@@ -100,6 +100,7 @@ module.exports.CouponGenerator = (id) => {
 
 	let code = frontNum + hashNum + lastNum;
 	let arrCode = code.split('');
+	let couponCode = "";
 	for (let i = 0; i < arrCode.length; i++)
 	{
 		couponCode += arrCode[i];
@@ -110,5 +111,3 @@ module.exports.CouponGenerator = (id) => {
 	}
 	return couponCode;
 };
-
-// console.log(CouponGenerator(10));

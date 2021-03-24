@@ -15,14 +15,15 @@ router.post('', async (req, res) => {
 
 		let insertQ = 'INSERT INTO coupon(email, price, quantity) VALUES(?,?,?)';
 		let params = [email, p, q];
-		const insertInfo = await pool.query(insertQ, params);
-		const id = insertInfo[0].insertId;
+		let insertInfo = await pool.query(insertQ, params);
+		let id = insertInfo[0].insertId;
 
 		// coupon code generate
 		let couponCode = generator.CouponGenerator(id);
 		if (couponCode)
 		{
 			await pool.query(`UPDATE coupon SET code='${couponCode}' WHERE id=${id}`);
+			couponCode = "";
 		}
 
 		let selectQ = 'SELECT * FROM coupon';
