@@ -93,7 +93,7 @@ const IdRotate = (id) => {
 
 /** Main 함수 **/
 
-const CouponGenerator = (id) => {
+module.exports.CouponGenerator = (id) => {
 	let frontNum = frontCode();
 	let hashNum = HashCode();
 	let lastNum = IdRotate(id);
@@ -111,4 +111,4 @@ const CouponGenerator = (id) => {
 	return couponCode;
 };
 
-console.log(CouponGenerator(10));
+// console.log(CouponGenerator(10));

@@ -1,7 +1,7 @@
 const express = require('express');
-
 const router = express.Router();
 const pool = require('../models/DbConnection');
+const generator = require('./couponGenerator.js');
 
 router.post('', async (req, res) => {
 	try {
@@ -19,11 +19,11 @@ router.post('', async (req, res) => {
 		const id = insertInfo[0].insertId;
 
 		// coupon code generate
-
-
-		// let insertCode = 'INSERT INTO coupon(code) VALUES(?)';
-		// let couponCode = ""
-		// await pool.query(insertCode, couponCode);
+		let couponCode = generator.CouponGenerator(id);
+		if (couponCode)
+		{
+			await pool.query(`UPDATE coupon SET code='${couponCode}' WHERE id=${id}`);
+		}
 
 		let selectQ = 'SELECT * FROM coupon';
 		const result = await pool.query(selectQ);
