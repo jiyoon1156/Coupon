@@ -6,29 +6,29 @@ const generator = require('./couponGenerator.js');
 
 router.post('', async (req, res) => {
   try {
-    const { email } = req.body;
-    const p = req.body.price;
-    const q = req.body.qnt;
+    const { userName } = req.body;
 
-    if (!email || !Number(p) || !Number(q)
-    || Number(p) < 0 || Number(p) > 2147483647
-    || Number(q) < 0 || Number(q) > 2147483647) {
-      return res.status(406).json({ message: 'wrong type' });
+    if (!userName) {
+      return res.status(406).json({ message: 'Not Acceptable' });
     }
-
-    const insertQ = 'INSERT INTO coupon(email, price, quantity) VALUES(?,?,?)';
-    const params = [email, p, q];
-    const insertInfo = await pool.query(insertQ, params);
-    const id = insertInfo[0].insertId;
-
-    let couponCode = generator.CouponGenerator(id);
-    if (couponCode) {
-      await pool.query(`UPDATE coupon SET code='${couponCode}' WHERE id=${id}`);
-      couponCode = '';
-    }
-
     const selectQ = 'SELECT * FROM coupon';
-    const result = await pool.query(selectQ);
+
+    // id 중복검사
+    const couponInfo = await pool.query(selectQ);
+    const couponSize = couponInfo[0].length;
+    for (let i = 0; i < couponSize; i++) {
+      if (userName === couponInfo[0][i].username) {
+        return res.status(409).json({ message: 'ID already exists' });
+      }
+    }
+    const nextId = couponInfo[0][couponSize - 1].id + 1;
+
+    const couponCode = generator.CouponGenerator(nextId);
+
+    const insertQ = 'INSERT INTO coupon(username, code) VALUES(?,?)';
+    const params = [userName, couponCode];
+    const result = await pool.query(insertQ, params);
+
     res.status(200).json({ result: result[0] });
   } catch (err) {
     res.status(500).json({ message: 'Internal Server Error' });
