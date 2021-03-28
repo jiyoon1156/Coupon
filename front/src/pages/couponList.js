@@ -5,8 +5,11 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../components/Button';
 import Ground from '../components/Ground';
+// import RoundedText from '../components/RoundedText';
 
-const CouponList = () => {
+const CouponList = ({ match }) => {
+  const userId = match.params.id;
+
   const [info, setInfo] = useState();
 
   useEffect(() => {
@@ -21,7 +24,6 @@ const CouponList = () => {
   const useCoupon = async (e) => {
     await axios.put('http://localhost:3000/use', {
       id: e.target.id,
-      qnt: e.target.name,
     })
       .then((response) => {
         console.log(response.data);
@@ -32,6 +34,26 @@ const CouponList = () => {
       });
   };
 
+  let pk = 0;
+  let couponCode = '';
+  let couponUsage = '';
+  let i = 0;
+  if (info) {
+    // eslint-disable-next-line no-plusplus
+    for (i = 0; i < info.length; i++) {
+      if (userId === info[i].username) {
+        pk = info[i].id;
+        couponCode = info[i].code;
+        couponUsage = info[i].used;
+        break;
+      }
+    }
+    if (i === info.length) {
+      return (
+        <h2>해당 ID로 조회된 쿠폰이 없습니다</h2>
+      );
+    }
+  }
   return (
     <>
       <Ground type="main">
@@ -42,30 +64,28 @@ const CouponList = () => {
             </Link>
           </Button>
           <Button type="main">
-            쿠폰함
+            내 쿠폰함
           </Button>
         </NavBar>
         <Box>
-          {info && info.map((i) => (
-            <Ground>
-              E-mail:
-              {' '}
-              {i.email}
-              <br />
-              가격:
-              {' '}
-              {i.price}
-              <br />
-              수량:
-              {' '}
-              {i.quantity}
-              <br />
-              쿠폰번호:
-              {' '}
-              {i.code}
-              <Button type="main" id={i.id} onClick={useCoupon} name={i.quantity}>사용하기</Button>
-            </Ground>
-          ))}
+          <Ground>
+            ID:
+            {' '}
+            {userId}
+            <br />
+            <br />
+            쿠폰번호:
+            {' '}
+            {couponCode}
+            <br />
+            <br />
+            사용여부:
+            {' '}
+            {couponUsage === 0 ? '사용 가능' : '이미 사용한 쿠폰'}
+            <br />
+            <br />
+            {couponUsage === 0 ? <Button type="main" id={pk} onClick={useCoupon}>사용하기</Button> : ''}
+          </Ground>
         </Box>
       </Ground>
     </>

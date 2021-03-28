@@ -5,17 +5,16 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../components/Button';
+import RoundedText from '../components/RoundedText';
 import Ground from '../components/Ground';
 import Form from '../components/Form';
 import Input from '../components/Input';
 
-const Posting = (e, q, p) => {
+const Posting = (e) => {
   const apiCall = async () => {
     await axios
       .post('http://localhost:3000/coupon', {
-        email: e,
-        qnt: q,
-        price: p,
+        userName: e,
       })
       .then((response) => {
         console.log(response.data);
@@ -31,12 +30,10 @@ const Posting = (e, q, p) => {
 
 const CreateCoupon = () => {
   const [inputs, setInputs] = useState({
-    email: '',
-    qnt: '',
-    price: '',
+    userName: '',
   });
 
-  const { email, qnt, price } = inputs;
+  const { userName } = inputs;
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -48,11 +45,9 @@ const CreateCoupon = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    Posting(email, qnt, price);
+    Posting(userName);
     setInputs({
-      email: '',
-      qnt: '',
-      price: '',
+      userName: '',
     });
   };
 
@@ -63,21 +58,18 @@ const CreateCoupon = () => {
           <Button type="main">
             쿠폰 만들기
           </Button>
-          <Button>
-            <Link to="/list">
-              쿠폰함
-            </Link>
-          </Button>
         </NavBar>
         <Form onSubmit={onSubmit}>
-          E-mail
-          <Input name="email" onChange={onChange} value={email} />
-          수량
-          <Input name="qnt" type="number" min="1" onChange={onChange} value={qnt} required />
-          가격
-          <Input name="price" type="number" min="1" onChange={onChange} value={price} required />
-          <Button type="main">발급받기</Button>
+          ID 를 입력하세요
+          <Input name="userName" onChange={onChange} value={userName} />
+          <br />
+          <RoundedText>발급받기</RoundedText>
         </Form>
+        <RoundedText>
+          <Link to={{ pathname: `/list/${inputs.userName}` }}>
+            조회하기
+          </Link>
+        </RoundedText>
       </Ground>
     </>
   );
