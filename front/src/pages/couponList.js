@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../components/Button';
 import Ground from '../components/Ground';
-// import RoundedText from '../components/RoundedText';
 
 const CouponList = ({ match }) => {
   const userId = match.params.id;

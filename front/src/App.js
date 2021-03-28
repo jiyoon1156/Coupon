@@ -60,10 +60,6 @@ body {
 `;
 
 const App = () => (
-  // <>
-  //   <CreateCoupon />
-  //   <CouponList />
-  // </>
   <BrowserRouter>
     <GlobalStyle />
     <Route exact path="/" component={CreateCoupon} />

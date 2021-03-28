@@ -66,7 +66,7 @@ const CreateCoupon = () => {
           <RoundedText>발급받기</RoundedText>
         </Form>
         <RoundedText>
-          <Link to={{ pathname: `/list/${inputs.userName}` }}>
+          <Link to={{ pathname: inputs.userName === '' ? '/' : `/list/${inputs.userName}` }}>
             조회하기
           </Link>
         </RoundedText>
