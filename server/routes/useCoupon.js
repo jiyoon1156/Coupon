@@ -6,13 +6,8 @@ const pool = require('../models/DbConnection');
 router.put('', async (req, res) => {
   try {
     const targetId = req.body.id;
-    const { qnt } = req.body;
 
-    if (qnt < 2) {
-      await pool.query(`DELETE FROM coupon WHERE id=${targetId}`);
-    } else {
-      await pool.query(`UPDATE coupon SET quantity=quantity-1 WHERE id=${targetId}`);
-    }
+    await pool.query(`UPDATE coupon SET used=1 WHERE id=${targetId}`);
 
     const selectQ = 'SELECT * FROM coupon';
     const result = await pool.query(selectQ);
