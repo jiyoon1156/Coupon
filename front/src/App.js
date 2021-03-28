@@ -51,6 +51,7 @@ body {
   justify-content: center;
   width: 100%;
   background-color: #E9E9E9;
+  font-weight: bold;
 }
 #root {
   width: 100%;
@@ -67,7 +68,7 @@ const App = () => (
     <GlobalStyle />
     <Route exact path="/" component={CreateCoupon} />
     <Switch>
-      <Route path="/list" component={CouponList} />
+      <Route path="/list/:id" component={CouponList} />
     </Switch>
   </BrowserRouter>
 );

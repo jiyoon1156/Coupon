@@ -8,7 +8,8 @@ const Form = ({ children, onSubmit }) => (
 
 const StyledForm = styled.form`
 display:flex;
-// width: 100%;
+width: 100%;
+align-items: center;
 flex-direction: column;
 margin: 20px;
 `;

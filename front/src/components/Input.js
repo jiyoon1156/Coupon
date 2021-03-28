@@ -9,11 +9,14 @@ const Input = ({
 );
 
 const StyledInput = styled.input`
+display: flex;
+width: 55%;
 border: none;
 border-radius: 5px;
 background: #c4c4c4;
-margin: 5px 0 20px;
-padding: 5px;
+margin: 20px 0 30px;
+padding: 10px;
+outline: none;
 `;
 
 export default Input;
